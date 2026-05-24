@@ -23,6 +23,11 @@ add_executable(Dumrarria
         src/RenderEntities.h
         src/game.cpp
         src/game.h
+        src/InputHandler.cpp
+        src/InputHandler.h
+        src/AppContext.h
+        src/AppContext.h
+        src/AppContext.h
 )
 
 # 3. Link SDL3 to your project

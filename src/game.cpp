@@ -3,11 +3,14 @@
 //
 
 #include "game.h"
-
+#include "AppContext.h"
 #include "player.h"
 
 void Game::initializeGame(AppContext &app) {
-    Player player = Player();
-    std::unique_ptr<Entity> p_player = std::make_unique<Entity>(player);
-    app.entities.push_back(std::move(p_player));
+    app.entities.push_back(std::make_unique<Player>(Position(10,10), BoxSize(20,20)));
+}
+void Game::spawnEntity(AppContext &app, Position position, BoxSize boxSize) {
+    Entity entity = Entity(position, boxSize);
+    std::unique_ptr<Entity> p_entity = std::make_unique<Entity>(entity);
+    app.entities.push_back(std::move(p_entity));
 }

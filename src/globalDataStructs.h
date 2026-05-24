@@ -6,16 +6,13 @@
 #include <memory>
 #include <vector>
 
-class Entity;
-
-struct AppContext {
-    float deltaTime{0.0f};
-    std::vector<std::unique_ptr<Entity>> entities;
-};
-
 struct ScreenSize {
     int width{0};
     int height{0};
+};
+struct VelocityVector {
+    float x{0};
+    float y{0};
 };
 struct Position {
     float x{0};

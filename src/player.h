@@ -12,7 +12,7 @@ class Player : public Entity {
     RGBAlpha hitBoxColor{255,255,255,255};
     public:
     Player();
-    Player(float x, float y);
+    Player(Position pos,BoxSize hbs);
     Player(float x, float y, bool canCollide);
 
     [[nodiscard]]RGBAlpha getHitBoxColor()const;

@@ -7,11 +7,13 @@
 #include <SDL3/SDL_render.h>
 
 #include "globalDataStructs.h"
+#include "AppContext.h"
 
 
 class Game {
     public:
         void initializeGame(AppContext &app);
+        void spawnEntity(AppContext &app, Position position, BoxSize boxSize);
 };
 
 

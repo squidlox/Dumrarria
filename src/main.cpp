@@ -3,16 +3,18 @@
 #include <vector>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include  "InputHandler.h"
 #include "globalDataStructs.h"
 #include "game.h"
-#include "player.h"
 #include "RenderEntities.h"
+#include "AppContext.h"
 
 //setup variables for initializaiton
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 ScreenSize screenSize;
-
+Game game;
+bool spawned = false;
 
 //setup delta time
 static Uint64 lastTimeMs = 0;
@@ -77,6 +79,10 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     context->deltaTime = static_cast<float>(elapsedMs)/1000.0f;
     //std::cout << elapsedMs << std::endl;
 
+    //testing stuff
+    InputHandler::getInputDirection();
+
+    //render the screen
     SDL_SetRenderDrawColor(renderer,2,2,2,2);
     SDL_RenderClear(renderer);
     drawEntities(renderer, context->entities);

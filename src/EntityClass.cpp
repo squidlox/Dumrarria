@@ -4,7 +4,7 @@
 #include "EntityClass.h"
 
 Entity::Entity() = default;
-Entity::Entity(const float x, const float y): position{x, y}{}
+Entity::Entity(Position pos,BoxSize hbs): position(pos), hitBoxSize(hbs) {}
 Entity::Entity(const float x,const float y, const bool canCollide) : position{x, y}, canCollidePriv{canCollide}{}
 
 //getters

@@ -5,7 +5,7 @@
 #include "player.h"
 #include "SDL3/SDL.h"
 Player::Player() = default;
-Player::Player(float x, float y) : Entity{x,y} {};
+Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs} {};
 Player::Player(float x, float y, bool canCollide) : Entity{x,y,canCollide} {};
 
 

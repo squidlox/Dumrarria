@@ -4,7 +4,6 @@
 #include "player.h"
 #include "SDL3/SDL.h"
 void drawEntities(SDL_Renderer *renderer, const std::vector<std::unique_ptr<Entity>>& entities){
-
     for (int i=0; i<entities.size(); i++) {
         SDL_FRect rect;
         rect.x = entities[i]->getPosition().x;
@@ -14,5 +13,4 @@ void drawEntities(SDL_Renderer *renderer, const std::vector<std::unique_ptr<Enti
         SDL_SetRenderDrawColor(renderer, 255,255,255,255);
         SDL_RenderFillRect(renderer, &rect);
     }
-
 }
