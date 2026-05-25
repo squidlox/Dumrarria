@@ -7,24 +7,23 @@
 #include "EntityClass.h"
 #include "InputHandler.h"
 #include "globalDataStructs.h"
+#include "AppContext.h"
 #include "SDL3/SDL.h"
 
 class Player : public Entity {
     private:
-    float speed{0.01};
-    RGBAlpha hitBoxColor{255,255,255,255};
+    float speed{100};
     public:
     Player();
     Player(Position pos,BoxSize hbs);
     Player(Position pos, bool canCollide);
 
     //getters
-    [[nodiscard]]RGBAlpha getHitBoxColor()const;
 
-    void update(float deltaTime) override;
+
+    void update(AppContext& app, float deltaTime) override;
 
     //setters
-    void setHitBoxColor(RGBAlpha hitBoxColor);
 
     ~Player() override = default;
 };

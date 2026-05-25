@@ -4,11 +4,15 @@
 
 #ifndef DUMRARRIA_APPCONTEXT_H
 #define DUMRARRIA_APPCONTEXT_H
-#include "EntityClass.h"
+
+class Entity;
+class Player;
 
 struct AppContext {
     float deltaTime{0.0f};
     std::vector<std::unique_ptr<Entity>> entities;
+
+    Player* player = nullptr;
 };
 
 

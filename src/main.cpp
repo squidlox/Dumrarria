@@ -8,7 +8,7 @@
 #include "game.h"
 #include "RenderEntities.h"
 #include "AppContext.h"
-#include "player.h"
+#include "playerClass.h"
 
 //setup variables for initializaiton
 static SDL_Window *window = nullptr;
@@ -50,7 +50,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         SDL_Log("SDL_CreateWindowAndRenderer() failed: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
-    SDL_SetRenderLogicalPresentation(renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    SDL_SetRenderLogicalPresentation(renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_STRETCH);
 
     Game game;
     AppContext* context = new AppContext();

@@ -15,10 +15,9 @@ add_executable(Dumrarria
         src/globalDataStructs.h
         src/EntityClass.h
         src/EntityClass.cpp
-        src/EntityClass.h
         src/EngineUpdates.cpp
-        src/player.cpp
-        src/player.h
+        src/playerClass.cpp
+        src/playerClass.h
         src/RenderEntities.cpp
         src/RenderEntities.h
         src/game.cpp
@@ -26,8 +25,8 @@ add_executable(Dumrarria
         src/InputHandler.cpp
         src/InputHandler.h
         src/AppContext.h
-        src/AppContext.h
-        src/AppContext.h
+        src/Enemy.cpp
+        src/Enemy.h
 )
 
 # 3. Link SDL3 to your project

@@ -14,6 +14,9 @@ Position Entity::getPosition()const{
 BoxSize Entity::getHitBoxSize()const {
     return this->hitBoxSize;
 }
+RGBAlpha Entity::getColor() const {
+    return this->rgba;
+}
 bool Entity::canCollide()const{
     return this->canCollidePriv;
 }
@@ -34,8 +37,11 @@ void Entity::setHitBoxSize(const BoxSize size) {
 void Entity::setCanCollide(const bool canCollide) {
     this->canCollidePriv = canCollide;
 }
-void Entity::update(float deltaTime) {
+void Entity::update(AppContext& app, float deltaTime) {
 
+}
+void Entity::setColor(const RGBAlpha inRGBA) {
+    this->rgba = inRGBA;
 }
 
 Entity::~Entity() {
