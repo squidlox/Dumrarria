@@ -14,6 +14,12 @@ class Game {
     public:
         void initializeGame(AppContext &app);
         void spawnEntity(AppContext &app, Position position, BoxSize boxSize);
+        void updateEntities(AppContext &app);
+
+        template <typename T>
+        void spawn(AppContext &app, Position position, BoxSize boxSize) {
+        app.entities.push_back(std::make_unique<T>(position, boxSize));
+    }
 };
 
 

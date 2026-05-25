@@ -15,7 +15,7 @@ class Entity {
         //constructers
         Entity();
         Entity(Position pos,BoxSize hbs);
-        Entity(float x, float y, bool canCollide);
+        Entity(Position, bool canCollide);
 
         //getters
         [[nodiscard]] Position getPosition()const;
@@ -28,7 +28,9 @@ class Entity {
         void setHitBoxSize(BoxSize size);
         void setCanCollide(bool canCollide);
 
+        virtual void update(float deltaTime);
+
         //destrucor
-        virtual ~Entity() = default;
+        virtual ~Entity();
 };
 #endif //DUMRARRIA_ENTITYCLASSES_H

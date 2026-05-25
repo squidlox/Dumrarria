@@ -8,6 +8,7 @@
 #include "game.h"
 #include "RenderEntities.h"
 #include "AppContext.h"
+#include "player.h"
 
 //setup variables for initializaiton
 static SDL_Window *window = nullptr;
@@ -82,11 +83,20 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     //testing stuff
     InputHandler::getInputDirection();
 
+    /*if (spawned == false) {
+        spawned = true;
+        for (float i = 0; i < 100; i++) {
+            game.spawn<Player>(*context, Position{i,i}, BoxSize{i,i});
+        }
+    }*/
+
     //render the screen
     SDL_SetRenderDrawColor(renderer,2,2,2,2);
     SDL_RenderClear(renderer);
     drawEntities(renderer, context->entities);
     SDL_RenderPresent(renderer);
+
+    game.updateEntities(*context);
     return SDL_APP_CONTINUE;
 }
 

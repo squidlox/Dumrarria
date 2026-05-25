@@ -2,6 +2,7 @@
 // Created by waylon on 5/24/26.
 //
 #include "InputHandler.h"
+#include <cmath>
 
 VelocityVector InputHandler::getInputDirection()
 {
@@ -15,5 +16,10 @@ VelocityVector InputHandler::getInputDirection()
     if (state[downCode]){velocityVector.y += 1;}
     if (state[leftCode]){velocityVector.x -= 1;}
     if (state[rightCode]){velocityVector.x += 1;}
+    if (velocityVector.y != 0 && velocityVector.x != 0) {
+        float cSquared = sqrt((velocityVector.x * velocityVector.x) + (velocityVector.y * velocityVector.y));
+        velocityVector.x = velocityVector.x/cSquared;
+        velocityVector.y = velocityVector.y/cSquared;
+    }
     return velocityVector;
 }

@@ -5,7 +5,7 @@
 
 Entity::Entity() = default;
 Entity::Entity(Position pos,BoxSize hbs): position(pos), hitBoxSize(hbs) {}
-Entity::Entity(const float x,const float y, const bool canCollide) : position{x, y}, canCollidePriv{canCollide}{}
+Entity::Entity(const Position pos, const bool canCollide) : position{pos}, canCollidePriv{canCollide}{}
 
 //getters
 Position Entity::getPosition()const{
@@ -33,5 +33,12 @@ void Entity::setHitBoxSize(const BoxSize size) {
 }
 void Entity::setCanCollide(const bool canCollide) {
     this->canCollidePriv = canCollide;
+}
+void Entity::update(float deltaTime) {
+
+}
+
+Entity::~Entity() {
+
 }
 
