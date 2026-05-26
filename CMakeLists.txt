@@ -1,4 +1,4 @@
-#this is ai generated i dont wanna learn how to do this yet
+#this cMake file is ai generated i dont wanna learn how to do this yet
 
 cmake_minimum_required(VERSION 3.20) # Note: CMake 4.2 isn't released yet, 3.20+ is standard for modern SDL3
 project(Dumrarria)
