@@ -27,6 +27,8 @@ add_executable(Dumrarria
         src/AppContext.h
         src/Enemy.cpp
         src/Enemy.h
+        src/UserInterface.cpp
+        src/UserInterface.h
 )
 
 # 3. Link SDL3 to your project

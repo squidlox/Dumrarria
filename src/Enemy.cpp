@@ -1,7 +1,6 @@
 //
 // Created by waylon on 5/24/26.
 //
-
 #include "Enemy.h"
 #include "playerClass.h"
 #include <cmath>
@@ -14,7 +13,6 @@ Enemy::Enemy(Position pos, bool canCollide):Entity(pos,canCollide){};
 RGBAlpha Enemy::getHitBoxColor()const {
     return hitBoxColor;
 }
-
 void Enemy::update(AppContext& app, float deltaTime){
     if (app.player) {
         Position playerPos = app.player->getPosition();
@@ -29,7 +27,6 @@ void Enemy::update(AppContext& app, float deltaTime){
         this->setPosition(newPosition);
     }
 }
-
 //setters
 void Enemy::setHitBoxColor(RGBAlpha hitBoxColor) {
     this->hitBoxColor = hitBoxColor;

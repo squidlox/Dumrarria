@@ -20,10 +20,7 @@ RGBAlpha Entity::getColor() const {
 bool Entity::canCollide()const{
     return this->canCollidePriv;
 }
-
-
 //setters
-
 void Entity::setPosition(const float x, const float y) {
     this->position.x = x;
     this->position.y = y;
@@ -43,7 +40,6 @@ void Entity::update(AppContext& app, float deltaTime) {
 void Entity::setColor(const RGBAlpha inRGBA) {
     this->rgba = inRGBA;
 }
-
 Entity::~Entity() {
 
 }

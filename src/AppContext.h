@@ -1,9 +1,9 @@
 //
 // Created by waylon on 5/24/26.
 //
-
 #ifndef DUMRARRIA_APPCONTEXT_H
 #define DUMRARRIA_APPCONTEXT_H
+#include <SDL3/SDL.h>
 
 class Entity;
 class Player;
@@ -11,11 +11,8 @@ class Player;
 struct AppContext {
     float deltaTime{0.0f};
     std::vector<std::unique_ptr<Entity>> entities;
-
-    Player* player = nullptr;
+    SDL_Renderer *renderer;
+    Player *player{nullptr};
+    ScreenSize screenSize{1920,1080};
 };
-
-
-
-
 #endif //DUMRARRIA_APPCONTEXT_H

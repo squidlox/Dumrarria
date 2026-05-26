@@ -4,6 +4,8 @@
 #include "InputHandler.h"
 #include <cmath>
 
+#include "playerClass.h"
+
 VelocityVector InputHandler::getInputDirection()
 {
     const bool* state = SDL_GetKeyboardState(nullptr);
@@ -22,4 +24,12 @@ VelocityVector InputHandler::getInputDirection()
         velocityVector.y = velocityVector.y/cSquared;
     }
     return velocityVector;
+}
+void InputHandler::devChangeHealth(AppContext &app) {
+    const bool* state = SDL_GetKeyboardState(nullptr);
+    Player *player = app.player;
+    SDL_Scancode addHealth = keyMap.at(ADDHEALTH);
+    SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
+    if (state[addHealth]){player->setHealth(player->getHealth() + 0.001);}
+    if (state[removeHealth]){player->setHealth(player->getHealth() - 0.001);}
 }

@@ -19,13 +19,9 @@ void Game::spawnEntity(AppContext &app, Position position, BoxSize boxSize) {
     std::unique_ptr<Entity> p_entity = std::make_unique<Entity>(entity);
     app.entities.push_back(std::move(p_entity));
 }
-
-
-
 void Game::updateEntities(AppContext &app) {
     float deltaTime = app.deltaTime;
     for (int i = 0; i < app.entities.size(); i++) {
         app.entities[i]->update(app,deltaTime);
     }
-
 }

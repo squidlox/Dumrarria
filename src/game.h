@@ -9,7 +9,6 @@
 #include "globalDataStructs.h"
 #include "AppContext.h"
 
-
 class Game {
     public:
         void initializeGame(AppContext &app);

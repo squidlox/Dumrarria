@@ -6,17 +6,19 @@
 #include <iostream>
 #include <map>
 #include <ostream>
-
 #include "SDL3/SDL.h"
 #include "globalDataStructs.h"
+#include "AppContext.h"
 
 enum InputState {
   UP,
   DOWN,
   LEFT,
-  RIGHT
+  RIGHT,
+  ADDHEALTH,
+  REMOVEHEALTH,
 };
-
+class Player;
 class InputHandler {
   private:
       static inline std::map<InputState, SDL_Scancode> keyMap =
@@ -25,11 +27,14 @@ class InputHandler {
         {DOWN, SDL_SCANCODE_S},
         {LEFT, SDL_SCANCODE_A},
         {RIGHT, SDL_SCANCODE_D},
+        {ADDHEALTH, SDL_SCANCODE_EQUALS},
+        {REMOVEHEALTH, SDL_SCANCODE_MINUS}
     };
   public:
-  InputHandler();
-  ~InputHandler();
+    InputHandler();
+    ~InputHandler();
 
-  static VelocityVector getInputDirection();
+    static VelocityVector getInputDirection();
+    static void devChangeHealth(AppContext &app);
 };
 #endif //DUMRARRIA_INPUTHANDLER_H

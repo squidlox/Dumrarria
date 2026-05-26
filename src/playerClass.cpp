@@ -10,13 +10,13 @@ Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs} {this->setColor(RGBAlp
 Player::Player(Position pos, bool canCollide) : Entity{pos,canCollide} {};
 
 
-
 void Player::update(AppContext& app, float deltaTime){
     VelocityVector velocity = InputHandler::getInputDirection();
     Position newPosition;
     newPosition.x = this->getPosition().x + (velocity.x * speed)*deltaTime;
     newPosition.y = this->getPosition().y + (velocity.y * speed)*deltaTime;
     this->setPosition(newPosition);
-    std::cout << newPosition.x << "," << newPosition.y << std::endl;
+    std::cout << health << std::endl;
+   // std::cout << newPosition.x << "," << newPosition.y << std::endl;
 }
 

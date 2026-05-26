@@ -28,5 +28,4 @@ struct RGBAlpha {
     float b{0};
     float a{0};
 };
-
 #endif //DUMRARRIA_GLOBALDATASTRUCTS_H

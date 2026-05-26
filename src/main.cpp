@@ -9,12 +9,13 @@
 #include "RenderEntities.h"
 #include "AppContext.h"
 #include "playerClass.h"
+#include "UserInterface.h"
 
 //setup variables for initializaiton
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
-ScreenSize screenSize;
 Game game;
+UserInterface userInterface;
 bool spawned = false;
 
 //setup delta time
@@ -23,6 +24,7 @@ static Uint64 lastTimeMs = 0;
 //SDl APP INTIT RUNS ONCE WHEN USING CALLBACKS. AND RETURNS A VALUE OF TYPE SDL_AppResult
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
+    ScreenSize screenSize;
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("SDL_Init() failed: %s", SDL_GetError());
@@ -45,18 +47,23 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         screenSize.height = screen.h;
     }
 
-
     if (!SDL_CreateWindowAndRenderer("First SDL Window", screenSize.width, screenSize.height, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
         SDL_Log("SDL_CreateWindowAndRenderer() failed: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
+
     SDL_SetRenderLogicalPresentation(renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_STRETCH);
 
+    //initialize game and appContext
     Game game;
     AppContext* context = new AppContext();
     *appstate = context;
+    context->renderer = renderer;
+    context->screenSize = screenSize;
     game.initializeGame(*context);
     lastTimeMs = SDL_GetTicks();
+
+
     return SDL_APP_CONTINUE;
 }
 
@@ -78,29 +85,19 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     Uint64 elapsedMs = currentTimeMs - lastTimeMs;
     lastTimeMs = currentTimeMs;
     context->deltaTime = static_cast<float>(elapsedMs)/1000.0f;
-    //std::cout << elapsedMs << std::endl;
 
     //testing stuff
-    InputHandler::getInputDirection();
-
-    /*if (spawned == false) {
-        spawned = true;
-        for (float i = 0; i < 100; i++) {
-            game.spawn<Player>(*context, Position{i,i}, BoxSize{i,i});
-        }
-    }*/
+    InputHandler::devChangeHealth(*context);
 
     //render the screen
-    SDL_SetRenderDrawColor(renderer,2,2,2,2);
+    SDL_SetRenderDrawColor(renderer,20,20,20,255);
     SDL_RenderClear(renderer);
     drawEntities(renderer, context->entities);
+    userInterface.drawHealthBar(*context);
     SDL_RenderPresent(renderer);
-
     game.updateEntities(*context);
     return SDL_APP_CONTINUE;
 }
-
-
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
