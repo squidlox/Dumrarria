@@ -6,14 +6,18 @@
 #include <cmath>
 
 Enemy::Enemy(){}
-Enemy::Enemy(Position pos, BoxSize hbs): Entity{pos,hbs,true,true}{this->setColor(RGBAlpha{0,240,0,0});};
+Enemy::Enemy(Position pos, BoxSize hbs): Entity{pos,hbs,true,true}{/*this->setColor(RGBAlpha{0,240,0,0});*/};
 
 //getters
-RGBAlpha Enemy::getHitBoxColor()const {
-    return hitBoxColor;
-}
+
 void Enemy::update(AppContext& app, float deltaTime){
-    if (app.player) {
+
+    float newPositionY = this->getPosition().y + speed*deltaTime;
+
+    this->setPosition(Position{this->getPosition().x, newPositionY});
+
+
+    /*if (app.player) {
         Position playerPos = app.player->getPosition();
         Position enemyPos = this->getPosition();
         VelocityVector playerDirection = VelocityVector{playerPos.x-enemyPos.x, playerPos.y - enemyPos.y};
@@ -24,9 +28,6 @@ void Enemy::update(AppContext& app, float deltaTime){
         newPosition.x = this->getPosition().x + (playerDirection.x * speed)*deltaTime;
         newPosition.y = this->getPosition().y + (playerDirection.y * speed)*deltaTime;
         this->setPosition(newPosition);
-    }
+    }*/
 }
 //setters
-void Enemy::setHitBoxColor(RGBAlpha hitBoxColor) {
-    this->hitBoxColor = hitBoxColor;
-}

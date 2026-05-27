@@ -7,6 +7,7 @@ void drawEntities(SDL_Renderer *renderer, const std::vector<std::unique_ptr<Enti
     for (int i=0; i<entities.size(); i++) {
         SDL_FRect rect;
         RGBAlpha rgba = entities[i]->getColor();
+        //std::cout << rgba.r << " " << rgba.g << " " << rgba.b << " " << rgba.a << std::endl;
         rect.x = entities[i]->getPosition().x;
         rect.y = entities[i]->getPosition().y;
         rect.w = entities[i]->getHitBoxSize().width;

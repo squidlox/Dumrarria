@@ -16,6 +16,7 @@ class Entity {
     private:
         Position position{0,0};
         BoxSize hitBoxSize{10,10};
+
         RGBAlpha rgba{255,255,255,255};
 
 

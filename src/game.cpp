@@ -9,31 +9,27 @@
 #include "Enemy.h"
 #include "SDL3/SDL_stdinc.h"
 
-std::vector<std::unique_ptr<Entity>> collidableEntities;
+std::vector<Entity*> collidableEntities;
 void Game::initializeGame(AppContext &app) {
     spawnPlayer(app, Position(10,10), BoxSize(20,20));
-
-
-
-    std::cout<< app.entities.size() << " entities created" << std::endl;
 }
+
 void Game::spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable) {
-    Entity entity = Entity(position, boxSize, canCollide, moveable);
-    std::unique_ptr<Entity> p_entity = std::make_unique<Entity>(entity);
-    app.entities.push_back(std::move(p_entity));
+    std::unique_ptr<Entity> up_entity = std::make_unique<Entity>(position, boxSize, canCollide, moveable);
+    Entity *p_Entity = up_entity.get();
     if (canCollide == true) {
-        collidableEntities.push_back(std::move(p_entity));
-        std::cout<< "cancollide true" << std::endl;
+        collidableEntities.push_back(p_Entity);
     }
+    app.entities.push_back(std::move(up_entity));
+
 }
 void Game::spawnPlayer(AppContext &app, Position position, BoxSize boxSize) {
     if (app.player == nullptr) {
-        Player player = Player(position, boxSize);
-        std::unique_ptr<Player> p_Player = std::make_unique<Player>(player);
-        app.player = p_Player.get();
-        std::cout << app.player << std::endl;
-        app.entities.push_back(std::move(p_Player));
+        std::unique_ptr<Player> up_Player = std::make_unique<Player>(position, boxSize);
+        Player *p_Player = up_Player.get();
+        app.player = p_Player;
         collidableEntities.push_back(std::move(p_Player));
+        app.entities.push_back(std::move(up_Player));
     }
     else {
         std::cout << "attempt to spawn player with player already present" << std::endl;
@@ -41,11 +37,15 @@ void Game::spawnPlayer(AppContext &app, Position position, BoxSize boxSize) {
 }
 
 void Game::spawnEnemy(AppContext &app, Position position, BoxSize boxSize) {
-    Enemy enemy = Enemy(position, boxSize);
-    enemy.setHitBoxColor(RGBAlpha((255), SDL_rand(255), SDL_rand(255), 255));
-    std::unique_ptr<Enemy> p_enemy = std::make_unique<Enemy>(enemy);
-    app.entities.push_back(std::move(p_enemy));
-    collidableEntities.push_back(std::move(p_enemy));
+
+    std::unique_ptr<Enemy> up_enemy = std::make_unique<Enemy>(position, boxSize);
+    Enemy *p_Enemy = up_enemy.get();
+
+    RGBAlpha rgba = RGBAlpha(SDL_rand(255),SDL_rand(255),SDL_rand(255),255);
+    up_enemy->setColor(rgba);
+    up_enemy->setSpeed(SDL_rand(250));
+    collidableEntities.push_back(p_Enemy);
+    app.entities.push_back(std::move(up_enemy));
 }
 
 void Game::updateEntities(AppContext &app) {

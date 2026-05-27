@@ -15,6 +15,7 @@
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 Game game;
+
 UserInterface userInterface;
 bool spawned = false;
 
@@ -24,6 +25,7 @@ static Uint64 lastTimeMs = 0;
 //SDl APP INTIT RUNS ONCE WHEN USING CALLBACKS. AND RETURNS A VALUE OF TYPE SDL_AppResult
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
+    SDL_srand(1);
     ScreenSize screenSize;
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -31,8 +33,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
     //check for users display size and default to 1920x1080 if not found
-    screenSize.width = 1920;
-    screenSize.height = 1080;
     SDL_Rect screen;
     screen.w = screenSize.width;
     screen.h = screenSize.height;

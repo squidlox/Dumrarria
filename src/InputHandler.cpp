@@ -34,8 +34,8 @@ void InputHandler::devChangeHealth(AppContext &app) {
     SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
     if (state[addHealth]) {
         player->setHealth(player->getHealth() + 0.001);
-        for (int i = 0; i < 1000000; i++) {
-            game.spawnEnemy(app, Position(SDL_rand(1920),SDL_rand(1080)), BoxSize(20,20));
+        for (int i = 0; i < 10; i++) {
+            game.spawnEnemy(app, Position(SDL_rand(1920),SDL_rand(50)), BoxSize(20,20));
         }
     }
     if (state[removeHealth]) {
