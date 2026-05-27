@@ -6,17 +6,19 @@
 #include "EntityClass.h"
 #include "SDL3/SDL.h"
 Player::Player() = default;
-Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs} {this->setColor(RGBAlpha{255,255,255,255});}
-Player::Player(Position pos, bool canCollide) : Entity{pos,canCollide} {};
+Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs,true, true} {this->setColor(RGBAlpha{255,255,255,255});}
+;
 
 
 void Player::update(AppContext& app, float deltaTime){
     VelocityVector velocity = InputHandler::getInputDirection();
-    Position newPosition;
-    newPosition.x = this->getPosition().x + (velocity.x * speed)*deltaTime;
-    newPosition.y = this->getPosition().y + (velocity.y * speed)*deltaTime;
-    this->setPosition(newPosition);
-    std::cout << health << std::endl;
-   // std::cout << newPosition.x << "," << newPosition.y << std::endl;
+    if (velocity.x == 0 && velocity.y == 0) {}
+    else {
+        float movementReqX = (velocity.x * speed)*deltaTime;
+        float movementReqY = (velocity.y * speed)*deltaTime;
+        attemptMovement(movementReqX,movementReqY);
+    }
 }
+
+
 

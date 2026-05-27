@@ -13,7 +13,6 @@ private:
 public:
     Enemy();
     Enemy(Position pos,BoxSize hbs);
-    Enemy(Position pos, bool canCollide);
 
     //getters
     [[nodiscard]]RGBAlpha getHitBoxColor()const;

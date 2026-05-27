@@ -3,6 +3,7 @@
 //
 #include "InputHandler.h"
 #include <cmath>
+#include "game.h"
 
 #include "playerClass.h"
 
@@ -26,10 +27,22 @@ VelocityVector InputHandler::getInputDirection()
     return velocityVector;
 }
 void InputHandler::devChangeHealth(AppContext &app) {
+    Game game;
     const bool* state = SDL_GetKeyboardState(nullptr);
     Player *player = app.player;
     SDL_Scancode addHealth = keyMap.at(ADDHEALTH);
     SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
-    if (state[addHealth]){player->setHealth(player->getHealth() + 0.001);}
-    if (state[removeHealth]){player->setHealth(player->getHealth() - 0.001);}
+    if (state[addHealth]) {
+        player->setHealth(player->getHealth() + 0.001);
+        for (int i = 0; i < 1000000; i++) {
+            game.spawnEnemy(app, Position(SDL_rand(1920),SDL_rand(1080)), BoxSize(20,20));
+        }
+    }
+    if (state[removeHealth]) {
+        player->setHealth(player->getHealth() - 0.001);
+
+        std::cout << "Frame Time: " << app.deltaTime * 1000.0 << " ms\n"
+          << "FPS: " << static_cast<int>(1.0 / app.deltaTime) << '\n'
+          << "Entities spawned: " << app.entities.size() << '\n';
+    }
 }

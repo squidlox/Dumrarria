@@ -31,6 +31,7 @@ add_executable(Dumrarria
         src/UserInterface.h
 )
 
+target_compile_options(Dumrarria PRIVATE -Wall -Wextra -O3 -march=native)
 # 3. Link SDL3 to your project
 # This automatically handles both the include directories and the compiled library binaries
 target_link_libraries(Dumrarria PRIVATE SDL3::SDL3)

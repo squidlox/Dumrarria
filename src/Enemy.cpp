@@ -6,8 +6,7 @@
 #include <cmath>
 
 Enemy::Enemy(){}
-Enemy::Enemy(Position pos,BoxSize hbs): Entity(pos,hbs){this->setColor(RGBAlpha{0,240,0,0});};
-Enemy::Enemy(Position pos, bool canCollide):Entity(pos,canCollide){};
+Enemy::Enemy(Position pos, BoxSize hbs): Entity{pos,hbs,true,true}{this->setColor(RGBAlpha{0,240,0,0});};
 
 //getters
 RGBAlpha Enemy::getHitBoxColor()const {

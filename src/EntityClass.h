@@ -8,24 +8,33 @@
 
 #include "globalDataStructs.h"
 #include "AppContext.h"
+#include "cmath"
+#include <iostream>
 class AppContext;
 
 class Entity {
     private:
         Position position{0,0};
         BoxSize hitBoxSize{10,10};
-        bool canCollidePriv{false};
         RGBAlpha rgba{255,255,255,255};
+
+
+        //variables for collission
+        bool canCollidePriv{false};
+        bool isMoveablePriv{false};
+        float remainingMovementX{0.0f};
+        float remainingMovementY{0.0f};
+
     public:
         //constructers
         Entity();
-        Entity(Position pos,BoxSize hbs);
-        Entity(Position, bool canCollide);
+        Entity(Position pos, BoxSize hbs, bool canCollide, bool moveable);
 
         //getters
         [[nodiscard]] RGBAlpha getColor() const;
         [[nodiscard]] Position getPosition()const;
         [[nodiscard]] BoxSize getHitBoxSize()const;
+        [[nodiscard]] bool isMoveable()const;
         [[nodiscard]] bool canCollide() const;
 
         //setters
@@ -33,9 +42,15 @@ class Entity {
         void setPosition(const Position& pos);
         void setHitBoxSize(BoxSize size);
         void setCanCollide(bool canCollide);
+        void setIsMoveable(const bool moveable);
         void setColor(RGBAlpha rgba);
 
         virtual void update(AppContext &app,float deltaTime);
+
+        //movement functions
+        void attemptMovement(float dirX, float dirY);
+        void attemptMovementX(float dirX);
+        void attemptMovementY(float dirY);
 
         //destrucor
         virtual ~Entity();

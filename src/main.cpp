@@ -76,7 +76,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     return SDL_APP_CONTINUE;
 }
 
-//SDL'sVERSION OF MAIN FUNCTION
+//SDL's VERSION OF MAIN FUNCTION
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
     //calculate deltatime

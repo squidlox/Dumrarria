@@ -12,7 +12,13 @@
 class Game {
     public:
         void initializeGame(AppContext &app);
-        void spawnEntity(AppContext &app, Position position, BoxSize boxSize);
+
+        //spawning functions
+        void spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable);
+        void spawnPlayer(AppContext &app, Position position, BoxSize boxSize);
+        void spawnEnemy(AppContext &app, Position position, BoxSize boxSize);
+
+
         void updateEntities(AppContext &app);
 
         template <typename T>
