@@ -11,23 +11,15 @@ Enemy::Enemy(Position pos, BoxSize hbs): Entity{pos,hbs,true,true}{/*this->setCo
 //getters
 
 void Enemy::update(AppContext& app, float deltaTime){
-
-    float newPositionY = this->getPosition().y + speed*deltaTime;
-
-    this->setPosition(Position{this->getPosition().x, newPositionY});
-
-
-    /*if (app.player) {
+    if (app.player) {
         Position playerPos = app.player->getPosition();
         Position enemyPos = this->getPosition();
+        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y){ return;};
         VelocityVector playerDirection = VelocityVector{playerPos.x-enemyPos.x, playerPos.y - enemyPos.y};
-        Position newPosition;
         float cSquared = sqrt((playerDirection.x * playerDirection.x) + (playerDirection.y * playerDirection.y));
-        playerDirection.x = playerDirection.x/cSquared;
-        playerDirection.y = playerDirection.y/cSquared;
-        newPosition.x = this->getPosition().x + (playerDirection.x * speed)*deltaTime;
-        newPosition.y = this->getPosition().y + (playerDirection.y * speed)*deltaTime;
-        this->setPosition(newPosition);
-    }*/
+        playerDirection.x = (playerDirection.x/cSquared)* speed*deltaTime;
+        playerDirection.y = (playerDirection.y/cSquared)* speed*deltaTime;
+        attemptMovement(playerDirection.x, playerDirection.y);
+    }
 }
 //setters

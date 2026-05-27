@@ -68,10 +68,31 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 }
 
 //this function will set up event handling and returns an ADL_AppResult
-SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
+SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
 {
     if (event->type == SDL_EVENT_QUIT ) {
         return SDL_APP_SUCCESS;
+    }
+    if (event->type == SDL_EVENT_KEY_UP) {
+        AppContext* context = static_cast<AppContext*>(app);
+        if (event->key.scancode == SDL_SCANCODE_EQUALS) {
+
+            Position position(SDL_rand(1920),SDL_rand(1080));
+            BoxSize size {20,20};
+            game.spawnEnemy(*context,position,size);
+        }
+        if (event->key.scancode == SDL_SCANCODE_U) {
+            for (int i = 0; i <10000; i++) {
+                Position position(SDL_rand(1920),SDL_rand(1080));
+                BoxSize size {20,20};
+                game.spawnEnemy(*context,position,size);
+            }
+        }
+        if (event->key.scancode == SDL_SCANCODE_P) {
+            std::cout << "Frame Time: " << context->deltaTime * 1000.0 << " ms\n"
+          << "FPS: " << static_cast<int>(1.0 / context->deltaTime) << '\n'
+          << "Entities spawned: " << context->entities.size() << '\n';
+        }
     }
     return SDL_APP_CONTINUE;
 }
