@@ -7,18 +7,18 @@
 #include "InputHandler.h"
 
 Player::Player() = default;
-Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs,true, true} {this->setColor(RGBAlpha{255,255,255,255});}
+Player::Player(const Position pos,const BoxSize hbs): Entity{pos,hbs,true, true} {this->setColor(RGBAlpha{255,255,255,255});}
 ;
 
 
 //void Player::updateChildren(AppContext& app, float deltaTime){}
 
-void Player::childMove(const AppContext &app, float deltaTime) {
-    VelocityVector velocity = InputHandler::getInputDirection();
-    if (velocity.x == 0 && velocity.y == 0) {}
+void Player::childMove(const AppContext &app,const float deltaTime) {
+    //checks to see if movment is being inputted before trying to move
+    if (auto [x, y] = InputHandler::getInputDirection(); x == 0.0f && y == 0.0f) {return;}
     else {
-        float movementReqX = (velocity.x * speed)*deltaTime;
-        float movementReqY = (velocity.y * speed)*deltaTime;
+        const float movementReqX = (x * speed)*deltaTime;
+        const float movementReqY = (y * speed)*deltaTime;
         attemptMovement(app,movementReqX,movementReqY);
     }
 }

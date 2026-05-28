@@ -80,14 +80,13 @@ void Entity::attemptMovement(const AppContext &app, float dirX, float dirY) {
 
 void Entity::attemptMovementX(const AppContext &app,float dirX) {
     remainingMovementX += dirX;
-    int wholePixelsToMove = static_cast<int>(std::round(remainingMovementX));
-    if (wholePixelsToMove != 0) {
+    if (int wholePixelsToMove = static_cast<int>(std::round(remainingMovementX)); wholePixelsToMove != 0) {
         remainingMovementX -= static_cast<float>(wholePixelsToMove);
-        int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
+        const int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
 
         while (wholePixelsToMove != 0) {
             float nextPosition = this->getPosition().x + static_cast<float>(movementDirection);
-            if (!this->checkCollision(app,Position{nextPosition, this->getPosition().y}))/*<-- impliment AABB colission fun here*/ {
+            if (!this->checkCollision(app,Position{nextPosition, this->getPosition().y})){
                 this->setPosition(Position{nextPosition,this->getPosition().y});
                 wholePixelsToMove -= movementDirection;
             }
@@ -97,12 +96,11 @@ void Entity::attemptMovementX(const AppContext &app,float dirX) {
         }
     }
 }
-void Entity::attemptMovementY(const AppContext &app,float dirY) {
+void Entity::attemptMovementY(const AppContext &app, const float dirY) {
     remainingMovementY += dirY;
-    int wholePixelsToMove = static_cast<int>(std::round(remainingMovementY));
-    if (wholePixelsToMove != 0) {
+    if (int wholePixelsToMove = static_cast<int>(std::round(remainingMovementY)); wholePixelsToMove != 0) {
         remainingMovementY -= static_cast<float>(wholePixelsToMove);
-        int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
+        const int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
 
         while (wholePixelsToMove != 0) {
             float nextPosition = this->getPosition().y + static_cast<float>(movementDirection);

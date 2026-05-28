@@ -11,10 +11,10 @@ VelocityVector InputHandler::getInputDirection()
 {
     const bool* state = SDL_GetKeyboardState(nullptr);
     VelocityVector velocityVector{0,0};
-    SDL_Scancode upCode = keyMap.at(UP);
-    SDL_Scancode downCode = keyMap.at(DOWN);
-    SDL_Scancode leftCode = keyMap.at(LEFT);
-    SDL_Scancode rightCode = keyMap.at(RIGHT);
+    const SDL_Scancode upCode = keyMap.at(UP);
+    const SDL_Scancode downCode = keyMap.at(DOWN);
+    const SDL_Scancode leftCode = keyMap.at(LEFT);
+    const SDL_Scancode rightCode = keyMap.at(RIGHT);
     if (state[upCode]){velocityVector.y -= 1;}
     if (state[downCode]){velocityVector.y += 1;}
     if (state[leftCode]){velocityVector.x -= 1;}
@@ -29,8 +29,8 @@ VelocityVector InputHandler::getInputDirection()
 void InputHandler::devChangeHealth(const AppContext &app) {
     const bool* state = SDL_GetKeyboardState(nullptr);
     Player *player = app.player;
-    SDL_Scancode addHealth = keyMap.at(ADDHEALTH);
-    SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
+    const SDL_Scancode addHealth = keyMap.at(ADDHEALTH);
+    const SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
     if (state[addHealth]) {
         player->setHealth(player->getHealth() + 0.001f);
     }

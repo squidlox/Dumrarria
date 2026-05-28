@@ -8,7 +8,7 @@
 #include "game.h"
 #include "RenderEntities.h"
 #include "AppContext.h"
-#include "playerClass.h"
+#include "playerClass.h"//NOLINT
 #include "UserInterface.h"
 
 //setup variables for initializaiton
@@ -82,7 +82,7 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
             Game::Spawn::spawnEnemy(*context,position,size);
         }
         if (event->key.scancode == SDL_SCANCODE_U) {
-            for (int i = 0; i <1000; i++) {
+            for (int i = 0; i <100; i++) {
                 Position position(SDL_rand(1920),SDL_rand(1080));//NOLINT
                 BoxSize size {20,20};
                 Game::Spawn::spawnEnemy(*context,position,size);

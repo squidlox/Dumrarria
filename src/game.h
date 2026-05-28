@@ -16,6 +16,7 @@ namespace Game {
                 void spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable);
                 void spawnPlayer(AppContext &app, Position position, BoxSize boxSize);
                 void spawnEnemy(AppContext &app, Position position, BoxSize boxSize);
+                bool isSpawnPointValid(const AppContext &app, Position position, BoxSize boxSize);
         }
 };
 
