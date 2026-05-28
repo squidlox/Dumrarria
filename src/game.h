@@ -4,27 +4,19 @@
 
 #ifndef DUMRARRIA_GAME_H
 #define DUMRARRIA_GAME_H
-#include <SDL3/SDL_render.h>
 
 #include "globalDataStructs.h"
 #include "AppContext.h"
 
-class Game {
-    public:
+namespace Game {
         void initializeGame(AppContext &app);
-
+        void updateEntities(const AppContext &app);
         //spawning functions
-        void spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable);
-        void spawnPlayer(AppContext &app, Position position, BoxSize boxSize);
-        void spawnEnemy(AppContext &app, Position position, BoxSize boxSize);
-
-
-        void updateEntities(AppContext &app);
-
-        template <typename T>
-        void spawn(AppContext &app, Position position, BoxSize boxSize) {
-        app.entities.push_back(std::make_unique<T>(position, boxSize));
-    }
+        namespace Spawn {
+                void spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable);
+                void spawnPlayer(AppContext &app, Position position, BoxSize boxSize);
+                void spawnEnemy(AppContext &app, Position position, BoxSize boxSize);
+        }
 };
 
 

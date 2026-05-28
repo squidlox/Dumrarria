@@ -20,22 +20,21 @@ VelocityVector InputHandler::getInputDirection()
     if (state[leftCode]){velocityVector.x -= 1;}
     if (state[rightCode]){velocityVector.x += 1;}
     if (velocityVector.y != 0 && velocityVector.x != 0) {
-        float cSquared = sqrt((velocityVector.x * velocityVector.x) + (velocityVector.y * velocityVector.y));
+        float cSquared = std::sqrt((velocityVector.x * velocityVector.x) + (velocityVector.y * velocityVector.y));
         velocityVector.x = velocityVector.x/cSquared;
         velocityVector.y = velocityVector.y/cSquared;
     }
     return velocityVector;
 }
-void InputHandler::devChangeHealth(AppContext &app) {
-    Game game;
+void InputHandler::devChangeHealth(const AppContext &app) {
     const bool* state = SDL_GetKeyboardState(nullptr);
     Player *player = app.player;
     SDL_Scancode addHealth = keyMap.at(ADDHEALTH);
     SDL_Scancode removeHealth = keyMap.at(REMOVEHEALTH);
     if (state[addHealth]) {
-        player->setHealth(player->getHealth() + 0.001);
+        player->setHealth(player->getHealth() + 0.001f);
     }
     if (state[removeHealth]) {
-        player->setHealth(player->getHealth() - 0.001);
+        player->setHealth(player->getHealth() - 0.001f);
     }
 }

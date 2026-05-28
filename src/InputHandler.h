@@ -3,9 +3,7 @@
 //
 #ifndef DUMRARRIA_INPUTHANDLER_H
 #define DUMRARRIA_INPUTHANDLER_H
-#include <iostream>
 #include <map>
-#include <ostream>
 #include "SDL3/SDL.h"
 #include "globalDataStructs.h"
 #include "AppContext.h"
@@ -31,10 +29,8 @@ class InputHandler {
         {REMOVEHEALTH, SDL_SCANCODE_MINUS}
     };
   public:
-    InputHandler();
-    ~InputHandler();
 
     static VelocityVector getInputDirection();
-    static void devChangeHealth(AppContext &app);
+    static void devChangeHealth(const AppContext &app);
 };
 #endif //DUMRARRIA_INPUTHANDLER_H

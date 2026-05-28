@@ -8,9 +8,8 @@
 
 #include "globalDataStructs.h"
 #include "AppContext.h"
-#include "cmath"
-#include <iostream>
-class AppContext;
+
+struct AppContext;
 
 class Entity {
     private:
@@ -45,20 +44,20 @@ class Entity {
         void setPosition(const Position& pos);
         void setHitBoxSize(BoxSize size);
         void setCanCollide(bool canCollide);
-        void setIsMoveable(const bool moveable);
+        void setIsMoveable(bool moveable);
         void setColor(RGBAlpha rgba);
 
-        void update(AppContext &app,float deltaTime);
+        void update(const AppContext &app,float deltaTime);
 
         //movement functions
-        void attemptMovement(AppContext &app,float dirX, float dirY);
+        void attemptMovement(const AppContext &app,float dirX, float dirY);
     private:
 
-        void attemptMovementX(AppContext &app,float dirX);
-        void attemptMovementY(AppContext &app,float dirY);
-        virtual void updateChildren(AppContext& app, float deltaTime);
-        virtual void childMove(AppContext& app, float deltaTime);
-        bool checkCollision(const AppContext &app,Position nextPosition);
+        void attemptMovementX(const AppContext &app,float dirX);
+        void attemptMovementY(const AppContext &app,float dirY);
+        virtual void updateChildren(const AppContext& app, float deltaTime);
+        virtual void childMove(const AppContext &app, float deltaTime);
+        [[nodiscard]] bool checkCollision(const AppContext &app,Position nextPosition) const;
 
     public:
 

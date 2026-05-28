@@ -14,7 +14,7 @@
 //setup variables for initializaiton
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
-Game game;
+
 
 UserInterface userInterface;
 bool spawned = false;
@@ -55,12 +55,12 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     SDL_SetRenderLogicalPresentation(renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_STRETCH);
 
     //initialize game and appContext
-    Game game;
-    AppContext* context = new AppContext();
+    
+    auto* context = new AppContext();
     *appstate = context;
     context->renderer = renderer;
     context->screenSize = screenSize;
-    game.initializeGame(*context);
+    Game::initializeGame(*context);
     lastTimeMs = SDL_GetTicks();
 
 
@@ -74,18 +74,18 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
         return SDL_APP_SUCCESS;
     }
     if (event->type == SDL_EVENT_KEY_UP) {
-        AppContext* context = static_cast<AppContext*>(app);
+        auto* context = static_cast<AppContext*>(app);
         if (event->key.scancode == SDL_SCANCODE_EQUALS) {
 
-            Position position(SDL_rand(1920),SDL_rand(1080));
+            Position position(SDL_rand(1920),SDL_rand(1080));//NOLINT
             BoxSize size {20,20};
-            game.spawnEnemy(*context,position,size);
+            Game::Spawn::spawnEnemy(*context,position,size);
         }
         if (event->key.scancode == SDL_SCANCODE_U) {
             for (int i = 0; i <1000; i++) {
-                Position position(SDL_rand(1920),SDL_rand(1080));
+                Position position(SDL_rand(1920),SDL_rand(1080));//NOLINT
                 BoxSize size {20,20};
-                game.spawnEnemy(*context,position,size);
+                Game::Spawn::spawnEnemy(*context,position,size);
             }
         }
         if (event->key.scancode == SDL_SCANCODE_P) {
@@ -101,7 +101,7 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
     //calculate deltatime
-    AppContext* context = static_cast<AppContext*>(appstate);
+    auto* context = static_cast<AppContext*>(appstate);
     Uint64 currentTimeMs = SDL_GetTicks();
     Uint64 elapsedMs = currentTimeMs - lastTimeMs;
     lastTimeMs = currentTimeMs;
@@ -116,14 +116,14 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     drawEntities(renderer, context->entities);
     userInterface.drawHealthBar(*context);
     SDL_RenderPresent(renderer);
-    game.updateEntities(*context);
+    Game::updateEntities(*context);
     return SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     if (appstate) {
-        AppContext* context = static_cast<AppContext*>(appstate);
+        auto* context = static_cast<AppContext*>(appstate);
         delete context;
     }
 }

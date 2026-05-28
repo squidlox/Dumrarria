@@ -5,20 +5,19 @@
 #include "playerClass.h"
 #include <cmath>
 
-Enemy::Enemy(){}
+
 Enemy::Enemy(Position pos, BoxSize hbs): Entity{pos,hbs,true,true}{};
 
 //getters
 
-void Enemy::updateChildren(AppContext& app, float deltaTime){
-}
-void Enemy::childMove(AppContext &app, float deltaTime) {
+void Enemy::updateChildren(const AppContext& app, float deltaTime){return;}
+void Enemy::childMove(const AppContext &app, float deltaTime) {
     if (app.player) {
         Position playerPos = app.player->getPosition();
         Position enemyPos = this->getPosition();
         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y){ return;};
-        VelocityVector playerDirection = VelocityVector{playerPos.x-enemyPos.x, playerPos.y - enemyPos.y};
-        float cSquared = sqrt((playerDirection.x * playerDirection.x) + (playerDirection.y * playerDirection.y));
+        auto playerDirection = VelocityVector{playerPos.x-enemyPos.x, playerPos.y - enemyPos.y};
+        auto cSquared = static_cast<float>(sqrt(static_cast<double>((playerDirection.x * playerDirection.x) + (playerDirection.y * playerDirection.y))));
         playerDirection.x = (playerDirection.x/cSquared)* speed*deltaTime;
         playerDirection.y = (playerDirection.y/cSquared)* speed*deltaTime;
         attemptMovement(app,playerDirection.x, playerDirection.y);

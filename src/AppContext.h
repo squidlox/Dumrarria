@@ -3,7 +3,9 @@
 //
 #ifndef DUMRARRIA_APPCONTEXT_H
 #define DUMRARRIA_APPCONTEXT_H
+#include <memory>
 #include <SDL3/SDL.h>
+#include "vector"
 
 class Entity;
 class Player;

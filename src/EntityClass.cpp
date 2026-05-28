@@ -2,12 +2,14 @@
 // Created by waylon on 5/21/26.
 //
 #include "EntityClass.h"
+#include "cmath"
+#include <iostream>
 
 Entity::Entity() = default;
 
-Entity::Entity(Position pos, BoxSize hbs, bool canCollide, bool moveable)
-        : position{pos}, hitBoxSize{hbs}, canCollidePriv{canCollide}, isMoveablePriv{moveable},
-            boxSides{pos.y,pos.y-hbs.height, pos.y, pos.y+hbs.width}{}
+Entity::Entity(const Position pos, const BoxSize hbs, const bool canCollide, const bool moveable)
+        : position{pos}, hitBoxSize{hbs}, boxSides{pos.y,pos.y-hbs.height, pos.y, pos.y+hbs.width},
+          canCollidePriv{canCollide}, isMoveablePriv{moveable}{}
 
 //getters
 Position Entity::getPosition()const{
@@ -50,23 +52,23 @@ void Entity::setCanCollide(const bool canCollide) {
 void Entity::setIsMoveable(const bool moveable) {
     this->isMoveablePriv = moveable;
 }
-void Entity::update(AppContext& app, float deltaTime) {
+void Entity::update(const AppContext& app, float deltaTime) {
     if (this->isMoveablePriv == true) {
         this->childMove(app, deltaTime);
     }
     this->updateChildren(app, deltaTime);
 }
-void Entity::updateChildren(AppContext& app, float deltaTime) {
+void Entity::updateChildren(const AppContext& app, float deltaTime) {
 
 }
-void Entity::childMove(AppContext& app, float deltaTime){
+void Entity::childMove(const AppContext& app, float deltaTime){
 }
 void Entity::setColor(const RGBAlpha inRGBA) {
     this->rgba = inRGBA;
 }
 
 //todo possible opimization for entity movement: bounding box collision
-void Entity::attemptMovement(AppContext &app, float dirX, float dirY) {
+void Entity::attemptMovement(const AppContext &app, float dirX, float dirY) {
     if (isMoveablePriv == true) {
         this->attemptMovementX(app,dirX);
         this->attemptMovementY(app, dirY);
@@ -76,15 +78,15 @@ void Entity::attemptMovement(AppContext &app, float dirX, float dirY) {
     }
 }
 
-void Entity::attemptMovementX(AppContext &app,float dirX) {
+void Entity::attemptMovementX(const AppContext &app,float dirX) {
     remainingMovementX += dirX;
-    int wholePixelsToMove = std::round(remainingMovementX);
+    int wholePixelsToMove = static_cast<int>(std::round(remainingMovementX));
     if (wholePixelsToMove != 0) {
-        remainingMovementX -= wholePixelsToMove;
+        remainingMovementX -= static_cast<float>(wholePixelsToMove);
         int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
 
         while (wholePixelsToMove != 0) {
-            float nextPosition = this->getPosition().x + movementDirection;
+            float nextPosition = this->getPosition().x + static_cast<float>(movementDirection);
             if (!this->checkCollision(app,Position{nextPosition, this->getPosition().y}))/*<-- impliment AABB colission fun here*/ {
                 this->setPosition(Position{nextPosition,this->getPosition().y});
                 wholePixelsToMove -= movementDirection;
@@ -95,15 +97,15 @@ void Entity::attemptMovementX(AppContext &app,float dirX) {
         }
     }
 }
-void Entity::attemptMovementY(AppContext &app,float dirY) {
+void Entity::attemptMovementY(const AppContext &app,float dirY) {
     remainingMovementY += dirY;
-    int wholePixelsToMove = std::round(remainingMovementY);
+    int wholePixelsToMove = static_cast<int>(std::round(remainingMovementY));
     if (wholePixelsToMove != 0) {
-        remainingMovementY -= wholePixelsToMove;
+        remainingMovementY -= static_cast<float>(wholePixelsToMove);
         int movementDirection = (wholePixelsToMove > 0) ? 1 : -1;
 
         while (wholePixelsToMove != 0) {
-            float nextPosition = this->getPosition().y + movementDirection;
+            float nextPosition = this->getPosition().y + static_cast<float>(movementDirection);
 
             if (!this->checkCollision(app,Position{this->getPosition().x,nextPosition}))
             {
@@ -116,23 +118,24 @@ void Entity::attemptMovementY(AppContext &app,float dirY) {
         }
     }
 }
-bool Entity::checkCollision(const AppContext &app,const Position nextPosition) {
+bool Entity::checkCollision(const AppContext &app,const Position nextPosition) const {
     BoxSides nextBoxSides = boxSides;
     nextBoxSides.top = nextPosition.y; nextBoxSides.bottom = nextPosition.y + this->hitBoxSize.height;
     nextBoxSides.left = nextPosition.x; nextBoxSides.right = nextPosition.x + this->hitBoxSize.width;
 
-    for (int i = 0; i < app.entities.size(); i++) {
-        if (app.entities.at(i).get() == this) {continue;}
-       BoxSides UnKnEntitySides = app.entities.at(i)->getBoxSides();
-        if (nextBoxSides.top < UnKnEntitySides.bottom && nextBoxSides.bottom > UnKnEntitySides.top &&
-            nextBoxSides.left < UnKnEntitySides.right && nextBoxSides.right > UnKnEntitySides.left) {
-            return true;
+    for (const auto& entityPtr : app.entities) {
+
+        if (entityPtr.get() == this || entityPtr->canCollide() == false) {
+            continue;
         }
+        BoxSides indexEntitySides = entityPtr->getBoxSides();
+        if (nextBoxSides.top < indexEntitySides.bottom && nextBoxSides.bottom > indexEntitySides.top &&
+            nextBoxSides.left < indexEntitySides.right && nextBoxSides.right > indexEntitySides.left) {
+            return true;
+            }
     }
     return false;
 }
 
-Entity::~Entity() {
-
-}
+Entity::~Entity() = default;
 

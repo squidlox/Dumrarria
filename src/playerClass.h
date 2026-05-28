@@ -7,13 +7,12 @@
 #include "EntityClass.h"
 #include "globalDataStructs.h"
 #include "AppContext.h"
-#include "cmath"
-#include "InputHandler.h"
 class Player : public Entity {
     private:
     float maxHealth{100};
     float health{73};
     float speed{100};
+    void childMove(const AppContext &app, float deltaTime) override;
 
     public:
     Player();
@@ -25,14 +24,13 @@ class Player : public Entity {
     [[nodiscard]]float getHealth() const{return this->health;};
     [[nodiscard]] float getMaxHealth() const{return this->maxHealth;};
 
-    void updateChildren(AppContext &app, float deltaTime)override;
-    void childMove(AppContext &app, float deltaTime);
-    void attemptMovementX(float requestedMovement);
-    void attemptMovementY(float requestedMovement);
+    //void updateChildren(AppContext &app, float deltaTime)override;
+
+
 
     //setters
-    void setHealth(float health){this->health = health;};
-    void setMaxHealth(float maxHealth){this->maxHealth = maxHealth;};
+    void setHealth(float s_health){this->health = s_health;};
+    void setMaxHealth(float s_maxHealth){this->maxHealth = s_maxHealth;};
 
 
 

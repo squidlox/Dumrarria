@@ -9,18 +9,16 @@
 class Enemy : public Entity {
 private:
     float speed{75};
+    void updateChildren(const AppContext& app, float deltaTime) override;
+    void childMove(const AppContext &app, float deltaTime)override;
+
 public:
-    Enemy();
     Enemy(Position pos,BoxSize hbs);
 
     //getters
 
-    void updateChildren(AppContext& app, float deltaTime) override;
-    void childMove(AppContext &app, float deltaTime)override;
     //setters
-    void setSpeed(float speed){this->speed = speed;};
+    void setSpeed(float const s_Speed){this->speed = s_Speed;};
 
-
-    ~Enemy() override = default;
 };
 #endif //DUMRARRIA_ENEMY_H
