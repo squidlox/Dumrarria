@@ -22,6 +22,12 @@ struct BoxSize {
     float width{0};
     float height{0};
 };
+struct BoxSides {
+    float top{0};
+    float bottom{0};
+    float left{0};
+    float right{0};
+};
 struct RGBAlpha {
     float r{0};
     float g{0};

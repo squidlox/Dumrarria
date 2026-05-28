@@ -28,7 +28,7 @@ void Game::spawnPlayer(AppContext &app, Position position, BoxSize boxSize) {
         std::unique_ptr<Player> up_Player = std::make_unique<Player>(position, boxSize);
         Player *p_Player = up_Player.get();
         app.player = p_Player;
-        collidableEntities.push_back(std::move(p_Player));
+        collidableEntities.push_back(p_Player);
         app.entities.push_back(std::move(up_Player));
     }
     else {
@@ -43,7 +43,7 @@ void Game::spawnEnemy(AppContext &app, Position position, BoxSize boxSize) {
 
     RGBAlpha rgba = RGBAlpha(SDL_rand(255),SDL_rand(255),SDL_rand(255),255);
     up_enemy->setColor(rgba);
-    up_enemy->setSpeed(SDL_rand(250));
+    up_enemy->setSpeed(20);
     collidableEntities.push_back(p_Enemy);
     app.entities.push_back(std::move(up_enemy));
 }

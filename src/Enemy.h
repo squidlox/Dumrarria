@@ -15,7 +15,8 @@ public:
 
     //getters
 
-    void update(AppContext& app, float deltaTime) override;
+    void updateChildren(AppContext& app, float deltaTime) override;
+    void childMove(AppContext &app, float deltaTime)override;
     //setters
     void setSpeed(float speed){this->speed = speed;};
 

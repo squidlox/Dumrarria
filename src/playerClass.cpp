@@ -10,13 +10,17 @@ Player::Player(Position pos,BoxSize hbs): Entity{pos,hbs,true, true} {this->setC
 ;
 
 
-void Player::update(AppContext& app, float deltaTime){
+void Player::updateChildren(AppContext& app, float deltaTime){
+
+}
+
+void Player::childMove(AppContext &app, float deltaTime) {
     VelocityVector velocity = InputHandler::getInputDirection();
     if (velocity.x == 0 && velocity.y == 0) {}
     else {
         float movementReqX = (velocity.x * speed)*deltaTime;
         float movementReqY = (velocity.y * speed)*deltaTime;
-        attemptMovement(movementReqX,movementReqY);
+        attemptMovement(app,movementReqX,movementReqY);
     }
 }
 

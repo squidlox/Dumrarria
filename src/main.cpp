@@ -82,7 +82,7 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
             game.spawnEnemy(*context,position,size);
         }
         if (event->key.scancode == SDL_SCANCODE_U) {
-            for (int i = 0; i <10000; i++) {
+            for (int i = 0; i <1000; i++) {
                 Position position(SDL_rand(1920),SDL_rand(1080));
                 BoxSize size {20,20};
                 game.spawnEnemy(*context,position,size);

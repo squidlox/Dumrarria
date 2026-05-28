@@ -25,7 +25,8 @@ class Player : public Entity {
     [[nodiscard]]float getHealth() const{return this->health;};
     [[nodiscard]] float getMaxHealth() const{return this->maxHealth;};
 
-    void update(AppContext& app, float deltaTime) override;
+    void updateChildren(AppContext &app, float deltaTime)override;
+    void childMove(AppContext &app, float deltaTime);
     void attemptMovementX(float requestedMovement);
     void attemptMovementY(float requestedMovement);
 

@@ -16,7 +16,7 @@ class Entity {
     private:
         Position position{0,0};
         BoxSize hitBoxSize{10,10};
-
+        BoxSides boxSides{0,0,0,0};
         RGBAlpha rgba{255,255,255,255};
 
 
@@ -35,8 +35,10 @@ class Entity {
         [[nodiscard]] RGBAlpha getColor() const;
         [[nodiscard]] Position getPosition()const;
         [[nodiscard]] BoxSize getHitBoxSize()const;
+        [[nodiscard]] BoxSides getBoxSides();
         [[nodiscard]] bool isMoveable()const;
         [[nodiscard]] bool canCollide() const;
+
 
         //setters
         void setPosition(float x, float y);
@@ -46,12 +48,19 @@ class Entity {
         void setIsMoveable(const bool moveable);
         void setColor(RGBAlpha rgba);
 
-        virtual void update(AppContext &app,float deltaTime);
+        void update(AppContext &app,float deltaTime);
 
         //movement functions
-        void attemptMovement(float dirX, float dirY);
-        void attemptMovementX(float dirX);
-        void attemptMovementY(float dirY);
+        void attemptMovement(AppContext &app,float dirX, float dirY);
+    private:
+
+        void attemptMovementX(AppContext &app,float dirX);
+        void attemptMovementY(AppContext &app,float dirY);
+        virtual void updateChildren(AppContext& app, float deltaTime);
+        virtual void childMove(AppContext& app, float deltaTime);
+        bool checkCollision(const AppContext &app,Position nextPosition);
+
+    public:
 
         //destrucor
         virtual ~Entity();
