@@ -29,9 +29,12 @@ add_executable(Dumrarria
         src/Enemy.h
         src/UserInterface.cpp
         src/UserInterface.h
+        src/Camera.cpp
+        src/Camera.h
 )
 
-target_compile_options(Dumrarria PRIVATE -Wall -Wextra -O3 -march=native)
+#target_compile_options(Dumrarria PRIVATE -Wall -Wextra -g -O0 -fno-omit-frame-pointer -fsanitize=address)
+#target_link_options(Dumrarria PRIVATE -fsanitize=address)
 # 3. Link SDL3 to your project
 # This automatically handles both the include directories and the compiled library binaries
 target_link_libraries(Dumrarria PRIVATE SDL3::SDL3)

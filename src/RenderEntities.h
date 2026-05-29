@@ -4,6 +4,8 @@
 
 #ifndef DUMRARRIA_RENDERENTITIES_H
 #define DUMRARRIA_RENDERENTITIES_H
+#include <SDL3/SDL.h>
+#include "Camera.h"
 
-void drawEntities(SDL_Renderer *renderer, const std::vector<std::unique_ptr<Entity>>& entities);
+void drawEntities(const AppContext &app,SDL_Renderer *renderer,const Camera &camera);
 #endif //DUMRARRIA_RENDERENTITIES_H

@@ -11,7 +11,6 @@
 
 using namespace Game;
 
-std::vector<Entity*> collideableEntities;
 void Game::initializeGame(AppContext &app) {
     Spawn::spawnPlayer(app, Position(10,10), BoxSize(20,20));
 }
@@ -19,10 +18,6 @@ void Game::initializeGame(AppContext &app) {
 void Spawn::spawnEntity(AppContext &app, Position position, BoxSize boxSize, bool canCollide, bool moveable) {
     if (!isSpawnPointValid(app, position, boxSize)) { std::cout <<"INVALID SPAWN LOCATION\n"; return;}
     std::unique_ptr<Entity> up_entity = std::make_unique<Entity>(position, boxSize, canCollide, moveable);
-    Entity *p_Entity = up_entity.get();
-    if (canCollide == true) {
-        collideableEntities.push_back(p_Entity);
-    }
     app.entities.push_back(std::move(up_entity));
 }
 void Spawn::spawnPlayer(AppContext &app, Position position, BoxSize boxSize) {
@@ -41,13 +36,11 @@ void Spawn::spawnPlayer(AppContext &app, Position position, BoxSize boxSize) {
 void Spawn::spawnEnemy(AppContext &app, Position position, BoxSize boxSize) {
     if (!isSpawnPointValid(app, position, boxSize)) { std::cout <<"INVALID SPAWN LOCATION"; return; }
     std::unique_ptr<Enemy> up_enemy = std::make_unique<Enemy>(position, boxSize);
-    Enemy *p_Enemy = up_enemy.get();
-
 
     RGBAlpha rgba(SDL_rand(255),SDL_rand(255),SDL_rand(255),255);//NOLINT
     up_enemy->setColor(rgba);
     up_enemy->setSpeed(20);
-    collideableEntities.push_back(p_Enemy);
+
     app.entities.push_back(std::move(up_enemy));
 }
 

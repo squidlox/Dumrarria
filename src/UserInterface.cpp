@@ -5,6 +5,7 @@
 #include "playerClass.h"
 #include "SDL3/SDL.h"
 
+
 void  UserInterface::drawHealthBar(const AppContext &appContext) const{
     Player* player =  appContext.player;
     SDL_FRect rectGreenHealth;
@@ -30,4 +31,5 @@ void  UserInterface::drawHealthBar(const AppContext &appContext) const{
         SDL_SetRenderDrawColor(appContext.renderer,255,0,0,255);
         SDL_RenderFillRect(appContext.renderer, &rectRedHealth);
     }
+
 }

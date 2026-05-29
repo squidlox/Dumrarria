@@ -17,9 +17,9 @@ void Enemy::childMove(const AppContext &app, const float deltaTime) {
         Position enemyPos = this->getPosition();
         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y){ return;};
         auto playerDirection = VelocityVector{playerPos.x-enemyPos.x, playerPos.y - enemyPos.y};
-        const auto cSquared = static_cast<float>(sqrt(static_cast<double>((playerDirection.x * playerDirection.x) + (playerDirection.y * playerDirection.y))));
-        playerDirection.x = (playerDirection.x/cSquared)* speed*deltaTime;
-        playerDirection.y = (playerDirection.y/cSquared)* speed*deltaTime;
+        const auto c = static_cast<float>(sqrt(static_cast<double>((playerDirection.x * playerDirection.x) + (playerDirection.y * playerDirection.y))));
+        playerDirection.x = (playerDirection.x/c)* speed*deltaTime;
+        playerDirection.y = (playerDirection.y/c)* speed*deltaTime;
         attemptMovement(app,playerDirection.x, playerDirection.y);
     }
 }

@@ -6,9 +6,11 @@
 #include <memory>
 #include <SDL3/SDL.h>
 #include "vector"
+#include "globalDataStructs.h"
 
 class Entity;
 class Player;
+struct ScreenSize;
 
 struct AppContext {
     float deltaTime{0.0f};

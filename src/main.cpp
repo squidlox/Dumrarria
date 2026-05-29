@@ -8,6 +8,7 @@
 #include "game.h"
 #include "RenderEntities.h"
 #include "AppContext.h"
+#include "Camera.h"
 #include "playerClass.h"//NOLINT
 #include "UserInterface.h"
 
@@ -15,9 +16,9 @@
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 
-
 UserInterface userInterface;
-bool spawned = false;
+Camera camera;
+ScreenSize screenSize;
 
 //setup delta time
 static Uint64 lastTimeMs = 0;
@@ -26,7 +27,6 @@ static Uint64 lastTimeMs = 0;
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
     SDL_srand(1);
-    ScreenSize screenSize;
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("SDL_Init() failed: %s", SDL_GetError());
@@ -73,6 +73,9 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
     if (event->type == SDL_EVENT_QUIT ) {
         return SDL_APP_SUCCESS;
     }
+    if (event->type == SDL_EVENT_WINDOW_RESIZED) {
+        SDL_SetRenderViewport(renderer,nullptr);
+    }
     if (event->type == SDL_EVENT_KEY_UP) {
         auto* context = static_cast<AppContext*>(app);
         if (event->key.scancode == SDL_SCANCODE_EQUALS) {
@@ -83,7 +86,7 @@ SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
         }
         if (event->key.scancode == SDL_SCANCODE_U) {
             for (int i = 0; i <100; i++) {
-                Position position(SDL_rand(1920),SDL_rand(1080));//NOLINT
+                Position position(SDL_rand(1920) + camera.getDrawOffest().x,SDL_rand(1080)+ camera.getDrawOffest().y);//NOLINT
                 BoxSize size {20,20};
                 Game::Spawn::spawnEnemy(*context,position,size);
             }
@@ -110,10 +113,12 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     //testing stuff
     InputHandler::devChangeHealth(*context);
 
+    //update camera before rendering
+    camera.update(*context);
     //render the screen
     SDL_SetRenderDrawColor(renderer,20,20,20,255);
     SDL_RenderClear(renderer);
-    drawEntities(renderer, context->entities);
+    drawEntities(*context,renderer,camera);
     userInterface.drawHealthBar(*context);
     SDL_RenderPresent(renderer);
     Game::updateEntities(*context);
@@ -125,5 +130,11 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
     if (appstate) {
         auto* context = static_cast<AppContext*>(appstate);
         delete context;
+    }
+    if (renderer) {
+        SDL_DestroyRenderer(renderer);
+    }
+    if (window) {
+        SDL_DestroyWindow(window);
     }
 }
