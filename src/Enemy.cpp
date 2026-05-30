@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-Enemy::Enemy(const Position pos, const BoxSize hbs): Entity{pos,hbs,true,true}{};
+Enemy::Enemy(const Position pos, const BoxSize hbs): Entity{pos,hbs,true,true, false}{};
 
 //getters
 

@@ -3,6 +3,7 @@
 //
 #ifndef DUMRARRIA_GLOBALDATASTRUCTS_H
 #define DUMRARRIA_GLOBALDATASTRUCTS_H
+#include <map>
 #include <SDL3/SDL_stdinc.h>
 
 struct ScreenSize {
@@ -32,5 +33,11 @@ struct RGBAlpha {
     Uint8 g{0};
     Uint8 b{0};
     Uint8 a{0};
+};
+
+enum TextureName {
+    PLAYER,
+    ZOMBIE,
+    NOTEXTURE
 };
 #endif //DUMRARRIA_GLOBALDATASTRUCTS_H

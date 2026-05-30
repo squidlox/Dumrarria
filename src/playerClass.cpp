@@ -7,7 +7,7 @@
 #include "InputHandler.h"
 
 Player::Player() = default;
-Player::Player(const Position pos,const BoxSize hbs): Entity{pos,hbs,true, true} {this->setColor(RGBAlpha{255,255,255,255});}
+Player::Player(const Position pos,const BoxSize hbs): Entity{pos,hbs,true, true,true} {this->setColor(RGBAlpha{255,255,255,255});}
 ;
 
 

@@ -11,6 +11,10 @@ Entity::Entity(const Position pos, const BoxSize hbs, const bool canCollide, con
         : position{pos}, hitBoxSize{hbs}, boxSides{pos.y,pos.y-hbs.height, pos.y, pos.y+hbs.width},
           canCollidePriv{canCollide}, isMoveablePriv{moveable}{}
 
+Entity::Entity(const Position pos, const BoxSize hbs, const bool canCollide, const bool moveable, const bool sprite)
+        : position{pos}, hitBoxSize{hbs}, boxSides{pos.y,pos.y-hbs.height, pos.y, pos.y+hbs.width},
+          canCollidePriv{canCollide}, isMoveablePriv{moveable}, hasSpritePriv{sprite}{}
+
 //getters
 Position Entity::getPosition()const{
     return this->position;
@@ -33,6 +37,14 @@ bool Entity::canCollide()const{
 }
 bool Entity::isMoveable()const {
     return this->isMoveablePriv;
+}
+
+bool Entity::hasSprite() const {
+    return this->hasSpritePriv;
+}
+
+TextureName Entity::getTextureName()const {
+    return this->textureName;
 }
 
 //setters

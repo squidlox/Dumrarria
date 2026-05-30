@@ -13,10 +13,15 @@ struct AppContext;
 
 class Entity {
     private:
+        //physics variables
         Position position{0,0};
         BoxSize hitBoxSize{10,10};
         BoxSides boxSides{0,0,0,0};
-        RGBAlpha rgba{255,255,255,255};
+
+        //texturmanager variables
+        bool hasSpritePriv{true};
+        TextureName textureName = PLAYER;
+
 
 
         //variables for collission
@@ -25,18 +30,25 @@ class Entity {
         float remainingMovementX{0.0f};
         float remainingMovementY{0.0f};
 
+        //debug variables
+        RGBAlpha rgba{255,255,255,255};
+
     public:
         //constructers
         Entity();
+    Entity(Position pos, BoxSize hbs, bool canCollide);
         Entity(Position pos, BoxSize hbs, bool canCollide, bool moveable);
+    Entity(Position pos, BoxSize hbs, bool canCollide, bool moveable, bool hasSprite);
 
         //getters
         [[nodiscard]] RGBAlpha getColor() const;
+        [[nodiscard]] TextureName getTextureName() const;
         [[nodiscard]] Position getPosition()const;
         [[nodiscard]] BoxSize getHitBoxSize()const;
         [[nodiscard]] BoxSides getBoxSides();
         [[nodiscard]] bool isMoveable()const;
         [[nodiscard]] bool canCollide() const;
+        [[nodiscard]] bool hasSprite()const;
 
 
         //setters

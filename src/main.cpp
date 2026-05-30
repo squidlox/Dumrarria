@@ -52,7 +52,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
-    SDL_SetRenderLogicalPresentation(renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_STRETCH);
+
 
     //initialize game and appContext
     
@@ -60,9 +60,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     *appstate = context;
     context->renderer = renderer;
     context->screenSize = screenSize;
+    context->textureManager = new TextureManager();
     Game::initializeGame(*context);
     lastTimeMs = SDL_GetTicks();
 
+    SDL_SetRenderLogicalPresentation(context->renderer,screenSize.width, screenSize.height, SDL_LOGICAL_PRESENTATION_STRETCH);
 
     return SDL_APP_CONTINUE;
 }
@@ -70,14 +72,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 //this function will set up event handling and returns an ADL_AppResult
 SDL_AppResult SDL_AppEvent(void *app, SDL_Event *event)
 {
+    auto *context = static_cast<AppContext *>(app);
     if (event->type == SDL_EVENT_QUIT ) {
         return SDL_APP_SUCCESS;
     }
     if (event->type == SDL_EVENT_WINDOW_RESIZED) {
-        SDL_SetRenderViewport(renderer,nullptr);
+        SDL_SetRenderViewport(context->renderer,nullptr);
     }
     if (event->type == SDL_EVENT_KEY_UP) {
-        auto* context = static_cast<AppContext*>(app);
         if (event->key.scancode == SDL_SCANCODE_EQUALS) {
 
             Position position(SDL_rand(1920),SDL_rand(1080));//NOLINT
@@ -116,23 +118,23 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     //update camera before rendering
     camera.update(*context);
     //render the screen
-    SDL_SetRenderDrawColor(renderer,20,20,20,255);
-    SDL_RenderClear(renderer);
-    drawEntities(*context,renderer,camera);
+    SDL_SetRenderDrawColor(context->renderer,20,20,20,255);
+    SDL_RenderClear(context->renderer);
+    drawEntities(*context,context->renderer,camera);
     userInterface.drawHealthBar(*context);
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(context->renderer);
     Game::updateEntities(*context);
     return SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    if (appstate) {
-        auto* context = static_cast<AppContext*>(appstate);
-        delete context;
+    auto *context = static_cast<AppContext *>(appstate);
+    if (context->renderer) {
+        SDL_DestroyRenderer(context->renderer);
     }
-    if (renderer) {
-        SDL_DestroyRenderer(renderer);
+    if (appstate) {
+        delete context;
     }
     if (window) {
         SDL_DestroyWindow(window);
